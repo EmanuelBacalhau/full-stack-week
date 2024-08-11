@@ -28,7 +28,7 @@ export const Search = () => {
   })
 
   function handleSearchClick(values: SearchProps) {
-    return router.push(`/barbershop?search=${values.search}`)
+    return router.push(`/barbershop?title=${values.search}`)
   }
 
   return (

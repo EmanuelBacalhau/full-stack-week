@@ -16,11 +16,17 @@ import {
 import { DialogTrigger } from '@radix-ui/react-dialog'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarImage } from './ui/avatar'
+import { useRouter } from 'next/navigation'
 
 export const Sidebar = () => {
   const { data } = useSession()
+  const router = useRouter()
   const handleLoginWithGoogleClick = () => signIn('google')
   const handleLogOutWithGoogleClick = () => signOut()
+
+  function handleQuickSearchClick(title: string) {
+    router.push(`/barbershop?service=${title}`)
+  }
 
   return (
     <SheetContent className="overflow-y-auto [&::-webkit-scrollbar]:hidden">
@@ -98,19 +104,21 @@ export const Sidebar = () => {
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
         {quickSearchOptions.map((option) => (
-          <Button
-            key={option.title}
-            className="justify-start gap-2"
-            variant="ghost"
-          >
-            <Image
-              src={option.imageUrl}
-              alt={option.title}
-              width={18}
-              height={18}
-            />
-            {option.title}
-          </Button>
+          <SheetClose key={option.title} asChild>
+            <Button
+              className="justify-start gap-2"
+              variant="ghost"
+              onClick={() => handleQuickSearchClick(option.title)}
+            >
+              <Image
+                src={option.imageUrl}
+                alt={option.title}
+                width={18}
+                height={18}
+              />
+              {option.title}
+            </Button>
+          </SheetClose>
         ))}
       </div>
 

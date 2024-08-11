@@ -3,11 +3,11 @@ import { db } from './_lib/prisma'
 import Image from 'next/image'
 
 import { Header } from './_components/header'
-import { Button } from './_components/ui/button'
 import { BarbershopSection } from './_components/barbershop-section'
 import { quickSearchOptions } from './_constants/search'
 import { BookingItem } from './_components/booking-item'
 import { Search } from './_components/search'
+import { QuickSearchButton } from './_components/quick-search-button'
 
 async function getBarbershops() {
   const barbershops = await db.barbershop.findMany()
@@ -40,15 +40,7 @@ const Home = async () => {
 
         <div className="my-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
           {quickSearchOptions.map((option) => (
-            <Button key={option.title} className="gap-2" variant="outline">
-              <Image
-                src={option.imageUrl}
-                alt={option.title}
-                width={16}
-                height={16}
-              />
-              {option.title}
-            </Button>
+            <QuickSearchButton key={option.title} option={option} />
           ))}
         </div>
 
