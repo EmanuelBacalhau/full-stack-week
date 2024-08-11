@@ -19,12 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
         <AuthProvider>
-          <Toaster />
-          {children}
-          <Footer />
+          <main className="flex h-full flex-col">
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </main>
         </AuthProvider>
+        <Toaster />
       </body>
     </html>
   )
