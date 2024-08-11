@@ -1,14 +1,9 @@
 import { CalendarIcon, HomeIcon, LogOutIcon } from 'lucide-react'
-import {
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from './_components/ui/sheet'
-import { Button } from './_components/ui/button'
-import { Avatar, AvatarImage } from './_components/ui/avatar'
+import { SheetClose, SheetContent, SheetHeader, SheetTitle } from './ui/sheet'
+import { Button } from './ui/button'
+import { Avatar, AvatarImage } from './ui/avatar'
 import Link from 'next/link'
-import { quickSearchOptions } from './_constants/search'
+import { quickSearchOptions } from '../_constants/search'
 import Image from 'next/image'
 
 export const Sidebar = () => {
