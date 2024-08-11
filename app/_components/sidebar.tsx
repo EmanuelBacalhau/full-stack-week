@@ -1,10 +1,17 @@
-import { CalendarIcon, HomeIcon, LogOutIcon } from 'lucide-react'
+import { CalendarIcon, HomeIcon, LogInIcon, LogOutIcon } from 'lucide-react'
 import { SheetClose, SheetContent, SheetHeader, SheetTitle } from './ui/sheet'
 import { Button } from './ui/button'
-import { Avatar, AvatarImage } from './ui/avatar'
 import Link from 'next/link'
 import { quickSearchOptions } from '../_constants/search'
 import Image from 'next/image'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from './ui/dialog'
+import { DialogTrigger } from '@radix-ui/react-dialog'
 
 export const Sidebar = () => {
   return (
@@ -13,8 +20,29 @@ export const Sidebar = () => {
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>
 
-      <div className="flex items-center gap-3 border-b border-solid py-5">
-        <Avatar>
+      <div className="flex items-center justify-between gap-3 border-b border-solid py-5">
+        <h2 className="text-lg font-bold">Olá, faça seu login!</h2>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size="icon">
+              <LogInIcon size={18} />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Faça login na plataforma</DialogTitle>
+              <DialogDescription>
+                Conecte-se usando sua conta Google
+              </DialogDescription>
+            </DialogHeader>
+
+            <Button variant="outline" className="gap-2">
+              <Image src="/google.svg" alt="Google" width={18} height={18} />
+              Google
+            </Button>
+          </DialogContent>
+        </Dialog>
+        {/* <Avatar>
           <AvatarImage
             src="https://github.com/EmanuelBacalhau.png"
             alt="User"
@@ -26,7 +54,7 @@ export const Sidebar = () => {
           <p className="truncate text-xs text-muted-foreground max-sm:max-w-[180px]">
             carlosemanuelbatistabacalhau@gmail.com
           </p>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
