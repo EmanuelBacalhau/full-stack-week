@@ -4,6 +4,7 @@ import { authOptions } from '@/_lib/auth'
 import { db } from '@/_lib/prisma'
 import { endOfDay, startOfDay } from 'date-fns'
 import { getServerSession } from 'next-auth'
+import { revalidatePath } from 'next/cache'
 
 interface GetBookingProps {
   barbershopId: string
@@ -31,6 +32,8 @@ export async function getBookings({ barbershopId, date }: GetBookingProps) {
       date: true,
     },
   })
+
+  revalidatePath('/bookings')
 
   return bookings
 }
