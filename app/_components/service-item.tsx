@@ -1,7 +1,7 @@
 'use client'
 
-import { createBooking } from '@/_actions/create-bookinfg'
-import { getBookings } from '@/_actions/get-booking'
+import { createBooking } from '@/_actions/create-booking'
+import { getBookings } from '@/_actions/get-bookings'
 import type { Barbershop, BarbershopService } from '@prisma/client'
 import { format, set } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -21,35 +21,12 @@ import {
   SheetTrigger,
 } from './ui/sheet'
 import { useToast } from './ui/use-toast'
+import { TIME_LIST } from '@/_constants/time-list'
 
 interface ServiceItemProps {
   service: BarbershopService
   barbershop: Pick<Barbershop, 'name' | 'id'>
 }
-
-const TIME_LIST = [
-  '08:00',
-  '08:30',
-  '09:00',
-  '09:30',
-  '10:00',
-  '10:30',
-  '11:00',
-  '11:30',
-  '12:00',
-  '12:30',
-  '13:00',
-  '13:30',
-  '14:00',
-  '14:30',
-  '15:00',
-  '15:30',
-  '16:00',
-  '16:30',
-  '17:00',
-  '17:30',
-  '18:00',
-]
 
 export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const { toast } = useToast()
@@ -111,7 +88,6 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       })
 
       await createBooking({
-        userId: data.user.id,
         barbershopServiceId: service.id,
         date: newDate,
       })

@@ -9,6 +9,9 @@ import { BookingItem } from './_components/booking-item'
 import { Search } from './_components/search'
 import { Button } from './_components/ui/button'
 import Link from 'next/link'
+import { authOptions } from './_lib/auth'
+import { getServerSession } from 'next-auth'
+import { getAllBookingsByUser } from './_actions/get-all-bookings-by-user'
 
 async function getBarbershops() {
   const barbershops = await db.barbershop.findMany()
@@ -27,8 +30,11 @@ async function getPopularesBarbershop() {
 }
 
 const Home = async () => {
+  const session = await getServerSession(authOptions)
   const barbershops = await getBarbershops()
   const popularesBarbershops = await getPopularesBarbershop()
+
+  const bookings = session && (await getAllBookingsByUser(session.user.id))
 
   return (
     <div>
@@ -69,11 +75,19 @@ const Home = async () => {
           />
         </div>
 
-        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-muted-foreground">
-          Agendamentos
-        </h2>
+        {bookings && bookings.length !== 0 && (
+          <>
+            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-muted-foreground">
+              Agendamentos
+            </h2>
 
-        <BookingItem />
+            <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+              {bookings.map((booking) => (
+                <BookingItem key={booking.id} booking={booking} />
+              ))}
+            </div>
+          </>
+        )}
 
         <BarbershopSection barbershops={barbershops} title="Recomendados" />
 
