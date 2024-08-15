@@ -8,6 +8,7 @@ import { quickSearchOptions } from '../_constants/search'
 import Image from 'next/image'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -23,6 +24,14 @@ export const Sidebar = () => {
   const router = useRouter()
   const handleLoginWithGoogleClick = () => signIn('google')
   const handleLogOutWithGoogleClick = () => signOut()
+
+  const handleRedirectToBookings = () => {
+    if (!data?.user) {
+      signIn('google')
+    } else {
+      router.push('/bookings')
+    }
+  }
 
   function handleQuickSearchClick(title: string) {
     router.push(`/barbershop?service=${title}`)
@@ -97,11 +106,13 @@ export const Sidebar = () => {
         </SheetClose>
 
         <SheetClose asChild>
-          <Button className="justify-start gap-2" variant="ghost" asChild>
-            <Link href="/bookings">
-              <CalendarIcon size={18} />
-              Agendamentos
-            </Link>
+          <Button
+            onClick={handleRedirectToBookings}
+            className="justify-start gap-2"
+            variant="ghost"
+          >
+            <CalendarIcon size={18} />
+            Agendamentos
           </Button>
         </SheetClose>
       </div>
@@ -128,14 +139,41 @@ export const Sidebar = () => {
 
       {data?.user && (
         <div className="flex flex-col gap-2 py-5">
-          <Button
-            className="justify-start gap-2"
-            variant="ghost"
-            onClick={handleLogOutWithGoogleClick}
-          >
-            <LogOutIcon size={18} />
-            Sair da conta
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="justify-start gap-2" variant="ghost">
+                <LogOutIcon size={18} />
+                Sair da conta
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Sair</DialogTitle>
+                <DialogDescription>
+                  Tem certeza que deseja sair da sua conta?
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="flex gap-3">
+                <DialogClose asChild>
+                  <Button className="w-full" variant="outline">
+                    Voltar
+                  </Button>
+                </DialogClose>
+
+                <DialogClose asChild>
+                  <Button
+                    className="w-full"
+                    variant="destructive"
+                    onClick={handleLogOutWithGoogleClick}
+                  >
+                    Sair
+                  </Button>
+                </DialogClose>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
     </SheetContent>
