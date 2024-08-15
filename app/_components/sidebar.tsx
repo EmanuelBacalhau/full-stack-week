@@ -79,14 +79,17 @@ export const Sidebar = () => {
           </>
         )}
 
-        {data?.user?.image && (
+        {data?.user && data.user.image && (
           <div className="flex items-center gap-3">
             <Avatar>
               <AvatarImage src={data.user.image} alt="User" />
             </Avatar>
 
             <div className="flex flex-col">
-              <p className="font-bold">{data.user.name}</p>
+              <p className="space-x-1 font-bold">
+                <span>{data.user.name?.split(' ')[0]}</span>
+                <span>{data.user.name?.split(' ')[1]}</span>
+              </p>
               <p className="truncate text-xs text-muted-foreground max-sm:max-w-[180px]">
                 {data.user.email}
               </p>
