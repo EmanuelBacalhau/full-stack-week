@@ -2,12 +2,14 @@
 
 import { createBooking } from '@/_actions/create-booking'
 import { getBookings } from '@/_actions/get-bookings'
-import type { Barbershop, BarbershopService } from '@prisma/client'
-import { format, set } from 'date-fns'
+import { TIME_LIST } from '@/_constants/time-list'
+import type { Barbershop, BarbershopService, Booking } from '@prisma/client'
+import { format, isPast, set } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { BookingSummary } from './booking-summary'
 import { Button } from './ui/button'
 import { Calendar } from './ui/calendar'
 import { Card, CardContent } from './ui/card'
@@ -21,12 +23,27 @@ import {
   SheetTrigger,
 } from './ui/sheet'
 import { useToast } from './ui/use-toast'
-import { TIME_LIST } from '@/_constants/time-list'
-import { BookingSummary } from './booking-summary'
 
 interface ServiceItemProps {
   service: BarbershopService
   barbershop: Pick<Barbershop, 'name' | 'id'>
+}
+
+function getTimeList(bookings: Booking[], selectedDay: Date) {
+  const formattedBookings = bookings.map((booking) => {
+    return format(booking.date, 'HH:mm')
+  })
+
+  return TIME_LIST.filter((time) => {
+    const timeIsOnThePast = isPast(
+      set(selectedDay, {
+        hours: Number(time.split(':')[0]),
+        minutes: Number(time.split(':')[1]),
+      }),
+    )
+
+    return !formattedBookings.includes(time) && !timeIsOnThePast
+  })
 }
 
 export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
@@ -38,7 +55,7 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   )
-  const [dayBookings, setDayBookings] = useState<string[]>([])
+  const [dayBookings, setDayBookings] = useState<Booking[]>([])
 
   useEffect(() => {
     async function fetch() {
@@ -49,13 +66,7 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         barbershopId: barbershop.id,
       })
 
-      const formattedBookings = bookings.map((booking) => {
-        return format(booking.date, 'HH:mm')
-      })
-
-      setDayBookings(
-        TIME_LIST.filter((time) => !formattedBookings.includes(time)),
-      )
+      setDayBookings(bookings)
     }
 
     fetch()
@@ -76,6 +87,12 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   function handleTimeSelect(time: string) {
     setSelectedTime(time)
   }
+
+  const timeList = useMemo(() => {
+    if (!selectedDay) return []
+
+    return getTimeList(dayBookings, selectedDay)
+  }, [dayBookings, selectedDay])
 
   async function handleCreateBooking() {
     try {
@@ -168,7 +185,13 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
                 {selectedDay && (
                   <div className="flex gap-2 overflow-x-auto border-b border-solid px-2 py-3 [&::-webkit-scrollbar]:hidden">
-                    {dayBookings.map((time) => (
+                    {!timeList.length && (
+                      <p className="text-sm text-muted-foreground">
+                        Não há horários disponíveis
+                      </p>
+                    )}
+
+                    {timeList.map((time) => (
                       <Button
                         onClick={() => handleTimeSelect(time)}
                         key={time}

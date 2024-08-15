@@ -28,9 +28,6 @@ export async function getBookings({ barbershopId, date }: GetBookingProps) {
         gte: startOfDay(date),
       },
     },
-    select: {
-      date: true,
-    },
   })
 
   revalidatePath('/bookings')
