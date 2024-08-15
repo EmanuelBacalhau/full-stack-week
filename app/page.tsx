@@ -12,6 +12,8 @@ import Link from 'next/link'
 import { authOptions } from './_lib/auth'
 import { getServerSession } from 'next-auth'
 import { getAllBookingsByUser } from './_actions/get-all-bookings-by-user'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 async function getBarbershops() {
   const barbershops = await db.barbershop.findMany()
@@ -36,12 +38,29 @@ const Home = async () => {
 
   const bookings = session && (await getAllBookingsByUser(session.user.id))
 
+  const currentDate = new Date()
+
   return (
     <div>
       <Header />
       <div className="p-5">
-        <h2 className="text-xl font-bold">Olá, Emanuel!</h2>
-        <p>Segunda-feira, 06 de agosto.</p>
+        <h2 className="text-xl font-bold">
+          Olá, {session ? session.user.name?.split(' ')[0] : 'bem vindo'}!
+        </h2>
+        <p>
+          <span className="capitalize">
+            {format(currentDate, 'EEEE', {
+              locale: ptBR,
+            })}
+          </span>
+          , <span>{format(currentDate, 'dd')}</span>
+          {' de '}
+          <span className="capitalize">
+            {format(currentDate, 'MMMM', {
+              locale: ptBR,
+            })}
+          </span>
+        </p>
 
         <Search />
 
