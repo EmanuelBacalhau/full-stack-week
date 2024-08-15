@@ -40,9 +40,26 @@ const Bookings = async () => {
             </h1>
 
             <div className="space-y-3">
-              {bookingsConfirmed.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
-              ))}
+              {bookingsConfirmed.map(
+                ({
+                  id,
+                  date,
+                  barbershopService: { barbershop, name, price },
+                }) => (
+                  <BookingItem
+                    key={id}
+                    booking={{
+                      id,
+                      date,
+                      barbershopService: {
+                        barbershop,
+                        name,
+                        price: Number(price),
+                      },
+                    }}
+                  />
+                ),
+              )}
             </div>
           </div>
         )}
@@ -54,9 +71,26 @@ const Bookings = async () => {
             </h1>
 
             <div className="space-y-3">
-              {bookingsFinalized.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
-              ))}
+              {bookingsFinalized.map(
+                ({
+                  id,
+                  date,
+                  barbershopService: { barbershop, name, price },
+                }) => (
+                  <BookingItem
+                    key={id}
+                    booking={{
+                      id,
+                      date,
+                      barbershopService: {
+                        barbershop,
+                        name,
+                        price: Number(price),
+                      },
+                    }}
+                  />
+                ),
+              )}
             </div>
           </div>
         )}
