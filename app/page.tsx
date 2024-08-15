@@ -102,7 +102,23 @@ const Home = async () => {
 
             <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
               {bookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
+                <BookingItem
+                  key={booking.id}
+                  booking={{
+                    id: booking.id,
+                    date: booking.date,
+                    barbershopService: {
+                      name: booking.barbershopService.name,
+                      price: Number(booking.barbershopService.price),
+                      barbershop: {
+                        name: booking.barbershopService.barbershop.name,
+                        imageUrl: booking.barbershopService.barbershop.imageUrl,
+                        address: booking.barbershopService.barbershop.address,
+                        phones: booking.barbershopService.barbershop.phones,
+                      },
+                    },
+                  }}
+                />
               ))}
             </div>
           </>
