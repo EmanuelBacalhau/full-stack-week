@@ -13,10 +13,13 @@ export async function getAllBookingsByUser(userId: string) {
       barbershopService: {
         select: {
           name: true,
+          price: true,
           barbershop: {
             select: {
               name: true,
               imageUrl: true,
+              address: true,
+              phones: true,
             },
           },
         },

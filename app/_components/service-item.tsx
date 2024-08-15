@@ -22,6 +22,7 @@ import {
 } from './ui/sheet'
 import { useToast } from './ui/use-toast'
 import { TIME_LIST } from '@/_constants/time-list'
+import { BookingSummary } from './booking-summary'
 
 interface ServiceItemProps {
   service: BarbershopService
@@ -183,48 +184,15 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
                 {selectedTime && selectedDay && (
                   <div className="p-3">
-                    <Card>
-                      <CardContent className="space-y-3 p-3">
-                        <div className="flex items-center justify-between">
-                          <h2 className="font-bold">{service.name}</h2>
-                          <p className="text-sm font-bold">
-                            {Intl.NumberFormat('pt-BR', {
-                              style: 'currency',
-                              currency: 'BRL',
-                            }).format(Number(service.price))}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <h2 className="text-sm text-muted-foreground">
-                            Data
-                          </h2>
-                          <p className="text-sm text-muted-foreground">
-                            {format(selectedDay as Date, "dd 'de' MMMM", {
-                              locale: ptBR,
-                            })}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <h2 className="text-sm text-muted-foreground">
-                            Horário
-                          </h2>
-                          <p className="text-sm text-muted-foreground">
-                            {selectedTime}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <h2 className="text-sm text-muted-foreground">
-                            Barbearia
-                          </h2>
-                          <p className="text-sm text-muted-foreground">
-                            {barbershop.name}
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <BookingSummary
+                      service={{
+                        name: service.name,
+                        price: Number(service.price),
+                      }}
+                      selectedDay={selectedDay}
+                      selectedTime={selectedTime}
+                      barbershopName={barbershop.name}
+                    />
                   </div>
                 )}
 
