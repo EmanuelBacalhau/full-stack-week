@@ -149,7 +149,7 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 </Button>
               )}
 
-              <SheetContent className="overflow-auto [&::-webkit-scrollbar]:hidden">
+              <SheetContent className="w-[90%] overflow-auto [&::-webkit-scrollbar]:hidden">
                 <SheetHeader>
                   <SheetTitle className="mb-3 text-left">
                     Fazer reservar

@@ -30,24 +30,26 @@ export const BookingSummary = ({
   return (
     <Card>
       <CardContent className="space-y-3 p-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold">{service.name}</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="font-bold">{service.name}:</h2>
           <p className="text-sm font-bold">{priceFormatted}</p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm text-muted-foreground">Data</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm text-muted-foreground">Data:</h2>
           <p className="text-sm text-muted-foreground">{dayFormatted}</p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm text-muted-foreground">Horário</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm text-muted-foreground">Horário:</h2>
           <p className="text-sm text-muted-foreground">{selectedTime}</p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm text-muted-foreground">Barbearia</h2>
-          <p className="text-sm text-muted-foreground">{barbershopName}</p>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm text-muted-foreground">Barbearia:</h2>
+          <p className="truncate text-sm text-muted-foreground">
+            {barbershopName}
+          </p>
         </div>
       </CardContent>
     </Card>
