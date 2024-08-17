@@ -51,7 +51,7 @@ const Home = async () => {
     <div>
       <Header />
 
-      <div className="container relative hidden justify-center px-32 py-16 lg:flex">
+      <div className="container relative hidden h-[460px] justify-center px-32 py-16 lg:flex">
         <Image
           src="/background-screen-lg.jpeg"
           fill

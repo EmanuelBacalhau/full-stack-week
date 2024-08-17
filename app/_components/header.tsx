@@ -1,18 +1,18 @@
 'use client'
 
-import Image from 'next/image'
-import { Card, CardContent } from './ui/card'
-import { Calendar, CircleUserRoundIcon, MenuIcon } from 'lucide-react'
-import { Button } from './ui/button'
-import { Sheet, SheetTrigger } from './ui/sheet'
 import { Sidebar } from '@/_components/sidebar'
-import Link from 'next/link'
+import { CalendarDaysIcon, CircleUserRoundIcon, MenuIcon } from 'lucide-react'
 import { signIn, useSession } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Avatar, AvatarImage } from './ui/avatar'
+import { Button } from './ui/button'
+import { Card, CardContent } from './ui/card'
+import { Sheet, SheetTrigger } from './ui/sheet'
 
-import { Search } from './search'
 import { useEffect, useState } from 'react'
+import { Search } from './search'
 
 export const Header = () => {
   const { data } = useSession()
@@ -48,7 +48,7 @@ export const Header = () => {
             className="justify-start gap-2"
             onClick={handleRedirectToBookings}
           >
-            <Calendar />
+            <CalendarDaysIcon />
             Agendamentos
           </Button>
 
