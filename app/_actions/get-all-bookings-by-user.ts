@@ -20,6 +20,7 @@ export async function getAllBookingsByUser(userId: string) {
               imageUrl: true,
               address: true,
               phones: true,
+              description: true,
             },
           },
         },

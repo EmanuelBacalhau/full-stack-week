@@ -133,7 +133,7 @@ export const BookingItem = ({ booking }: BookingItemProps) => {
         </div>
 
         <SheetFooter>
-          <div className="flex items-center gap-3">
+          <div className="flex w-full items-center gap-3">
             <SheetClose asChild>
               <Button className="flex-1" variant="outline">
                 Voltar

@@ -5,13 +5,13 @@ interface BookingItemProps {
   bookings: Booking[]
 }
 
-export const BookingList = ({ bookings }: BookingItemProps) => {
+export const BookingSlideList = ({ bookings }: BookingItemProps) => {
   return (
     <div>
       {bookings.length !== 0 && (
         <div>
-          <h2 className="mb-3 text-xs font-bold uppercase text-muted-foreground">
-            Agendamentos
+          <h2 className="mb-3 text-xs font-bold uppercase text-muted-foreground lg:text-sm">
+            Seus Agendamentos
           </h2>
 
           <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">

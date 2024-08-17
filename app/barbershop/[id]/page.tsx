@@ -34,7 +34,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 
   return (
     <div>
-      <div className="container hidden lg:grid lg:grid-cols-barbershop-page lg:gap-10 lg:p-5">
+      <div className="container hidden lg:grid lg:grid-cols-app-page lg:gap-10 lg:p-5">
         <div>
           <div className="relative h-[487px]">
             <Image
@@ -82,7 +82,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
           </div>
         </div>
 
-        <Card className="h-fit border-0 bg-gray-900">
+        <Card className="h-fit">
           <CardContent className="w-[386px] space-y-5 p-5">
             <MapItem
               barbershopAddress={barbershop.address}

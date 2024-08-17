@@ -23,7 +23,10 @@ export const Sidebar = () => {
   const { data } = useSession()
   const router = useRouter()
   const handleLoginWithGoogleClick = () => signIn('google')
-  const handleLogOutWithGoogleClick = () => signOut()
+  const handleLogOutWithGoogleClick = () => {
+    signOut()
+    router.push('/')
+  }
 
   const handleRedirectToBookings = () => {
     if (!data?.user) {

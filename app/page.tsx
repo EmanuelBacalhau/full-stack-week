@@ -2,11 +2,12 @@ import { db } from './_lib/prisma'
 
 import Image from 'next/image'
 
+import { compareDesc } from 'date-fns'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { getAllBookingsByUser } from './_actions/get-all-bookings-by-user'
 import { BarbershopSection } from './_components/barbershop-section'
-import { BookingList } from './_components/booking-list'
+import { BookingSlideList } from './_components/booking-slide-list'
 import { Search } from './_components/search'
 import { Button } from './_components/ui/button'
 import { Welcome } from './_components/welcome'
@@ -38,13 +39,15 @@ const Home = async () => {
 
   const bookingsFormatted = !bookings
     ? []
-    : bookings?.map((booking) => ({
-        ...booking,
-        barbershopService: {
-          ...booking.barbershopService,
-          price: Number(booking.barbershopService.price),
-        },
-      }))
+    : bookings
+        ?.map((booking) => ({
+          ...booking,
+          barbershopService: {
+            ...booking.barbershopService,
+            price: Number(booking.barbershopService.price),
+          },
+        }))
+        .sort((a, b) => compareDesc(a.date, b.date))
 
   return (
     <div>
@@ -60,9 +63,10 @@ const Home = async () => {
         <div className="z-10 w-full md:flex md:flex-col md:gap-4 lg:grid lg:grid-cols-2 lg:flex-row lg:gap-32">
           <div className="space-y-3 md:w-full lg:w-[440px]">
             <Welcome userName={session?.user?.name} />
+
             <Search />
 
-            <BookingList bookings={bookingsFormatted} />
+            <BookingSlideList bookings={bookingsFormatted} />
           </div>
 
           <div className="md:w-full lg:max-w-[617px]">
@@ -107,7 +111,7 @@ const Home = async () => {
             />
           </div>
 
-          <BookingList bookings={bookingsFormatted} />
+          <BookingSlideList bookings={bookingsFormatted} />
 
           <BarbershopSection barbershops={barbershops} title="Recomendados" />
         </div>

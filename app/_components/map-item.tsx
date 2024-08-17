@@ -23,7 +23,7 @@ export const MapItem = ({
       />
 
       <Card className="z-50 w-full overflow-hidden rounded-md border-none">
-        <CardContent className="flex items-center gap-3 bg-gray-900 px-5 py-3">
+        <CardContent className="flex items-center gap-3 px-5 py-3">
           <Avatar>
             <AvatarImage src={barbershopImageUrl} />
           </Avatar>

@@ -5,23 +5,18 @@ import { CalendarDaysIcon, CircleUserRoundIcon, MenuIcon } from 'lucide-react'
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
 import { Sheet, SheetTrigger } from './ui/sheet'
 
-import { useEffect, useState } from 'react'
 import { Search } from './search'
 
 export const Header = () => {
   const { data } = useSession()
   const router = useRouter()
-  const [currentPath, setCurrentPath] = useState('/')
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [currentPath])
+  const currentPath = usePathname()
 
   const handleRedirectToBookings = () => {
     if (!data?.user) {

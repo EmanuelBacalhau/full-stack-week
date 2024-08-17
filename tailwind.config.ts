@@ -14,7 +14,7 @@ const config = {
     },
     extend: {
       gridTemplateColumns: {
-        'barbershop-page': '1fr min-content',
+        'app-page': '1fr min-content',
       },
       colors: {
         border: 'hsl(var(--border))',
