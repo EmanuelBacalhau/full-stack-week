@@ -11,8 +11,8 @@ export const BarbershopSection = ({
   barbershops,
 }: BarbershopSectionProps) => {
   return (
-    <>
-      <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-muted-foreground">
+    <div>
+      <h2 className="mb-3 text-xs font-bold uppercase text-muted-foreground lg:text-base">
         {title}
       </h2>
 
@@ -21,6 +21,6 @@ export const BarbershopSection = ({
           <BarbershopItem key={barberShop.id} barbershop={barberShop} />
         ))}
       </div>
-    </>
+    </div>
   )
 }

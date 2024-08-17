@@ -14,7 +14,7 @@ interface BarbershopItemProps {
 
 export const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
   return (
-    <Card className="min-w-[160px]">
+    <Card className="min-w-[160px] max-w-[220px] lg:min-w-[220px]">
       <CardContent className="p-1">
         <div className="relative h-[160px] w-full">
           <Image

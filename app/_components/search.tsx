@@ -34,7 +34,7 @@ export const Search = () => {
   return (
     <Form {...form}>
       <form
-        className="mt-6 flex w-full gap-2"
+        className="flex w-full gap-2"
         onSubmit={form.handleSubmit(handleSearchClick)}
       >
         <FormField

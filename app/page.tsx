@@ -2,18 +2,17 @@ import { db } from './_lib/prisma'
 
 import Image from 'next/image'
 
-import { Header } from './_components/header'
+import { getServerSession } from 'next-auth'
+import Link from 'next/link'
+import { getAllBookingsByUser } from './_actions/get-all-bookings-by-user'
 import { BarbershopSection } from './_components/barbershop-section'
-import { quickSearchOptions } from './_constants/search'
-import { BookingItem } from './_components/booking-item'
+import { BookingList } from './_components/booking-list'
+import { Header } from './_components/header'
 import { Search } from './_components/search'
 import { Button } from './_components/ui/button'
-import Link from 'next/link'
+import { Welcome } from './_components/welcome'
+import { quickSearchOptions } from './_constants/search'
 import { authOptions } from './_lib/auth'
-import { getServerSession } from 'next-auth'
-import { getAllBookingsByUser } from './_actions/get-all-bookings-by-user'
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 
 async function getBarbershops() {
   const barbershops = await db.barbershop.findMany()
@@ -38,97 +37,89 @@ const Home = async () => {
 
   const bookings = session && (await getAllBookingsByUser(session.user.id))
 
-  const currentDate = new Date()
+  const bookingsFormatted = !bookings
+    ? []
+    : bookings?.map((booking) => ({
+        ...booking,
+        barbershopService: {
+          ...booking.barbershopService,
+          price: Number(booking.barbershopService.price),
+        },
+      }))
 
   return (
     <div>
       <Header />
-      <div className="p-5">
-        <h2 className="text-xl font-bold">
-          Olá, {session ? session.user.name?.split(' ')[0] : 'bem vindo'}!
-        </h2>
-        <p>
-          <span className="capitalize">
-            {format(currentDate, 'EEEE', {
-              locale: ptBR,
-            })}
-          </span>
-          , <span>{format(currentDate, 'dd')}</span>
-          {' de '}
-          <span className="capitalize">
-            {format(currentDate, 'MMMM', {
-              locale: ptBR,
-            })}
-          </span>
-        </p>
 
-        <Search />
+      <div className="relative hidden justify-center px-32 py-16 lg:flex">
+        <Image
+          src="/background-screen-lg.jpeg"
+          fill
+          objectFit="cover"
+          className="opacity-30 grayscale filter"
+          alt="teste"
+        />
 
-        <div className="my-6 flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
-          {quickSearchOptions.map((option) => (
-            <Button
-              key={option.title}
-              className="gap-2"
-              variant="outline"
-              asChild
-            >
-              <Link href={`/barbershop?service=${option.title}`}>
-                <Image
-                  src={option.imageUrl}
-                  alt={option.title}
-                  width={16}
-                  height={16}
-                />
-                {option.title}
-              </Link>
-            </Button>
-          ))}
+        <div className="z-10 grid w-full grid-cols-2 gap-32">
+          <div className="w-[440px] space-y-3">
+            <Welcome userName={session?.user?.name} />
+            <Search />
+
+            <BookingList bookings={bookingsFormatted} />
+          </div>
+
+          <div className="max-w-[617px]">
+            <BarbershopSection barbershops={barbershops} title="Recomendados" />
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3 p-5">
+        <div className="space-y-3 lg:hidden">
+          <Welcome userName={session?.user?.name} />
+
+          <Search />
+
+          <div className="flex gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
+            {quickSearchOptions.map((option) => (
+              <Button
+                key={option.title}
+                className="gap-2"
+                variant="outline"
+                asChild
+              >
+                <Link href={`/barbershop?service=${option.title}`}>
+                  <Image
+                    src={option.imageUrl}
+                    alt={option.title}
+                    width={16}
+                    height={16}
+                  />
+                  {option.title}
+                </Link>
+              </Button>
+            ))}
+          </div>
+
+          <div className="relative h-[150px] w-full">
+            <Image
+              src={'/banner-01.png'}
+              fill
+              className="rounded-xl object-cover"
+              alt="Agende os melhores com FSW Barbers"
+            />
+          </div>
+
+          <BookingList bookings={bookingsFormatted} />
+
+          <BarbershopSection barbershops={barbershops} title="Recomendados" />
         </div>
 
-        <div className="relative h-[150px] w-full">
-          <Image
-            src={'/banner-01.png'}
-            fill
-            className="rounded-xl object-cover"
-            alt="Agende os melhores com FSW Barbers"
-          />
-        </div>
-
-        {bookings && bookings.length !== 0 && (
-          <>
-            <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-muted-foreground">
-              Agendamentos
-            </h2>
-
-            <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-              {bookings.map((booking) => (
-                <BookingItem
-                  key={booking.id}
-                  booking={{
-                    id: booking.id,
-                    date: booking.date,
-                    barbershopService: {
-                      name: booking.barbershopService.name,
-                      price: Number(booking.barbershopService.price),
-                      barbershop: {
-                        name: booking.barbershopService.barbershop.name,
-                        imageUrl: booking.barbershopService.barbershop.imageUrl,
-                        address: booking.barbershopService.barbershop.address,
-                        phones: booking.barbershopService.barbershop.phones,
-                      },
-                    },
-                  }}
-                />
-              ))}
-            </div>
-          </>
-        )}
-
-        <BarbershopSection barbershops={barbershops} title="Recomendados" />
+        <BarbershopSection barbershops={barbershops} title="Populares" />
 
         <BarbershopSection
           barbershops={popularesBarbershops}
-          title="Populares"
+          title="Mais visitados"
         />
       </div>
     </div>

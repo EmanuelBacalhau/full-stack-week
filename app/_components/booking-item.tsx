@@ -31,22 +31,10 @@ import {
 import { deleteBooking } from '@/_actions/delete-booking'
 import { toast } from './ui/use-toast'
 import { useState } from 'react'
+import type { Booking } from '@/_dtos/booking'
 
 interface BookingItemProps {
-  booking: {
-    id: string
-    date: Date
-    barbershopService: {
-      name: string
-      price: number
-      barbershop: {
-        name: string
-        imageUrl: string
-        address: string
-        phones: string[]
-      }
-    }
-  }
+  booking: Booking
 }
 
 export const BookingItem = ({ booking }: BookingItemProps) => {
