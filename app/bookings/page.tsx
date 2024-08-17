@@ -33,12 +33,6 @@ const Bookings = async () => {
         <h1 className="text-xl font-bold">Agendamentos</h1>
         <div className="lg:grid lg:grid-cols-app-page lg:gap-10">
           <div className="space-y-6 lg:col-start-1">
-            {bookings.length === 0 && (
-              <p className="text-center text-muted-foreground">
-                Você não possui agendamentos.
-              </p>
-            )}
-
             {bookingsConfirmed.length !== 0 && (
               <div className="space-y-3">
                 <h1 className="uppercase text-muted-foreground">Próximos</h1>
@@ -148,6 +142,12 @@ const Bookings = async () => {
             )}
           </div>
         </div>
+
+        {bookings.length === 0 && (
+          <p className="text-center text-muted-foreground">
+            Você não possui agendamentos.
+          </p>
+        )}
       </div>
     </div>
   )
