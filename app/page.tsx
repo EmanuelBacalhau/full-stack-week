@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { getAllBookingsByUser } from './_actions/get-all-bookings-by-user'
 import { BarbershopSection } from './_components/barbershop-section'
 import { BookingList } from './_components/booking-list'
-import { Header } from './_components/header'
 import { Search } from './_components/search'
 import { Button } from './_components/ui/button'
 import { Welcome } from './_components/welcome'
@@ -49,8 +48,6 @@ const Home = async () => {
 
   return (
     <div>
-      <Header />
-
       <div className="container relative hidden justify-center px-32 py-16 md:flex lg:h-[460px]">
         <Image
           src="/background-screen-lg.jpeg"

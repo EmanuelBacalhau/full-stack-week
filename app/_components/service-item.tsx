@@ -135,9 +135,9 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
           />
         </div>
 
-        <div className="flex-1 space-y-2">
+        <div className="flex-1 space-y-2 overflow-hidden">
           <h3 className="text-sm font-semibold">{service.name}</h3>
-          <p className="w-[160px] truncate text-sm text-muted-foreground sm:w-full">
+          <p className="truncate text-sm text-muted-foreground">
             {service.description}
           </p>
 
@@ -175,6 +175,7 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
                 <div className="border-y border-solid py-3">
                   <Calendar
+                    className="flex-1"
                     fromDate={new Date()}
                     selected={selectedDay}
                     onSelect={handleDateSelect}
@@ -206,7 +207,7 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 )}
 
                 {selectedTime && selectedDay && (
-                  <div className="p-3">
+                  <div className="py-3">
                     <BookingSummary
                       service={{
                         name: service.name,
@@ -219,9 +220,10 @@ export const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   </div>
                 )}
 
-                <SheetFooter className="mt-3 px-3">
+                <SheetFooter className="mt-3 w-full">
                   <SheetClose asChild>
                     <Button
+                      className="w-full"
                       disabled={!selectedTime || !selectedDay}
                       onClick={handleCreateBooking}
                     >

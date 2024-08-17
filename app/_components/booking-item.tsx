@@ -1,23 +1,17 @@
 'use client'
 
+import { deleteBooking } from '@/_actions/delete-booking'
+import type { Booking } from '@/_dtos/booking'
 import { format, isFuture } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { useState } from 'react'
+import { BookingSummary } from './booking-summary'
+import { MapItem } from './map-item'
+import { PhoneItem } from './phone-item'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Badge } from './ui/badge'
-import { Card, CardContent } from './ui/card'
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from './ui/sheet'
-import Image from 'next/image'
-import { BookingSummary } from './booking-summary'
-import { PhoneItem } from './phone-item'
 import { Button } from './ui/button'
+import { Card, CardContent } from './ui/card'
 import {
   Dialog,
   DialogClose,
@@ -28,10 +22,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './ui/dialog'
-import { deleteBooking } from '@/_actions/delete-booking'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet'
 import { toast } from './ui/use-toast'
-import { useState } from 'react'
-import type { Booking } from '@/_dtos/booking'
 
 interface BookingItemProps {
   booking: Booking
@@ -111,29 +111,11 @@ export const BookingItem = ({ booking }: BookingItemProps) => {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="relative flex h-[180px] w-full items-end overflow-hidden rounded-md px-3 pb-3">
-          <Image
-            src="/map.png"
-            alt={`Mapa da barbearia ${barbershop.name}`}
-            fill
-            className="object-cover"
-          />
-
-          <Card className="z-50 w-full rounded-md border-none">
-            <CardContent className="flex items-center gap-3 px-5 py-3">
-              <Avatar>
-                <AvatarImage src={barbershop.imageUrl} />
-              </Avatar>
-
-              <div className="flex flex-col gap-1">
-                <h3 className="text-xs font-bold">{barbershop.name}</h3>
-                <h3 className="max-w-[140px] truncate text-xs">
-                  {barbershop.address}
-                </h3>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <MapItem
+          barbershopAddress={barbershop.address}
+          barbershopImageUrl={barbershop.imageUrl}
+          barbershopName={barbershop.name}
+        />
 
         <Badge className="">{isConfirmed ? 'Confirmada' : 'Finalizada'}</Badge>
 

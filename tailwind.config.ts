@@ -13,6 +13,9 @@ const config = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        'barbershop-page': '1fr min-content',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

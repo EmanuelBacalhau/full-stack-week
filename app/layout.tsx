@@ -4,6 +4,7 @@ import './globals.css'
 import { Footer } from './_components/footer'
 import { Toaster } from './_components/ui/toaster'
 import { AuthProvider } from './_providers/auth'
+import { Header } from './_components/header'
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -21,6 +22,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${nunito.className}`}>
         <AuthProvider>
+          <Header />
+
           <main className="flex h-full flex-col">
             <div className="flex-1">{children}</div>
             <Footer />

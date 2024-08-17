@@ -1,6 +1,5 @@
 import { getAllBookingsByUser } from '@/_actions/get-all-bookings-by-user'
 import { BookingItem } from '@/_components/booking-item'
-import { Header } from '@/_components/header'
 import { authOptions } from '@/_lib/auth'
 import { isFuture } from 'date-fns'
 import { getServerSession } from 'next-auth'
@@ -22,8 +21,6 @@ const Bookings = async () => {
 
   return (
     <>
-      <Header />
-
       <div className="space-y-6 p-5">
         <h1 className="text-xl font-bold">Agendamentos</h1>
 
