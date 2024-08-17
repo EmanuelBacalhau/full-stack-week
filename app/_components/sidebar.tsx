@@ -79,7 +79,7 @@ export const Sidebar = () => {
           </>
         )}
 
-        {data?.user && data.user.image && (
+        {data?.user?.image && (
           <div className="flex items-center gap-3">
             <Avatar>
               <AvatarImage src={data.user.image} alt="User" />
