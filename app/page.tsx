@@ -51,7 +51,7 @@ const Home = async () => {
     <div>
       <Header />
 
-      <div className="container relative hidden h-[460px] justify-center px-32 py-16 lg:flex">
+      <div className="container relative hidden justify-center px-32 py-16 md:flex lg:h-[460px]">
         <Image
           src="/background-screen-lg.jpeg"
           fill
@@ -60,22 +60,22 @@ const Home = async () => {
           alt="teste"
         />
 
-        <div className="z-10 grid w-full grid-cols-2 gap-32">
-          <div className="w-[440px] space-y-3">
+        <div className="z-10 w-full md:flex md:flex-col md:gap-4 lg:grid lg:grid-cols-2 lg:flex-row lg:gap-32">
+          <div className="space-y-3 md:w-full lg:w-[440px]">
             <Welcome userName={session?.user?.name} />
             <Search />
 
             <BookingList bookings={bookingsFormatted} />
           </div>
 
-          <div className="max-w-[617px]">
+          <div className="md:w-full lg:max-w-[617px]">
             <BarbershopSection barbershops={barbershops} title="Recomendados" />
           </div>
         </div>
       </div>
 
       <div className="container space-y-3 p-5">
-        <div className="space-y-3 lg:hidden">
+        <div className="space-y-3 md:hidden">
           <Welcome userName={session?.user?.name} />
 
           <Search />
