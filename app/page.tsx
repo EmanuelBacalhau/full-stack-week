@@ -51,7 +51,7 @@ const Home = async () => {
     <div>
       <Header />
 
-      <div className="relative hidden justify-center px-32 py-16 lg:flex">
+      <div className="container relative hidden justify-center px-32 py-16 lg:flex">
         <Image
           src="/background-screen-lg.jpeg"
           fill
@@ -74,7 +74,7 @@ const Home = async () => {
         </div>
       </div>
 
-      <div className="space-y-3 p-5">
+      <div className="container space-y-3 p-5">
         <div className="space-y-3 lg:hidden">
           <Welcome userName={session?.user?.name} />
 

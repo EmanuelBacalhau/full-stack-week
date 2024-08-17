@@ -33,7 +33,7 @@ export const Header = () => {
 
   return (
     <Card className="rounded-none border-x-0 border-t-0">
-      <CardContent className="flex items-center justify-between gap-11 p-5">
+      <CardContent className="container flex items-center justify-between gap-11 py-5">
         <Link href="/">
           <Image src={'/logo.png'} alt="FSW Barber" width={133} height={22} />
         </Link>
